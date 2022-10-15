@@ -7,6 +7,7 @@ const StepOne = () => {
     
     const [receiver, setReceiver] = useState('');
     const [list, setList] = useState(null);
+    const [profilePictureList, setProfilePictureList] = useState(null);
 
     return ( 
         <div className="relative w-full max-w-[546px] rounded-lg p-6 gap-6 flex flex-col bg-white">
@@ -18,9 +19,10 @@ const StepOne = () => {
                 <div>
                     <div className="flex flex-col gap-1.5">
                         <label className="font-medium text-xs leading-4  text-mainBlack">მიმღები</label>
-                        <Receiver receiver={receiver} setReceiver={setReceiver} setList={setList} />
+                        <Receiver receiver={receiver} setReceiver={setReceiver} setList={setList} setProfilePictureList={setProfilePictureList} />
                     </div>
-                    <Suggestions list={list} />
+                    { list && list.length>0 && <Suggestions list={list} profilePictureList={profilePictureList} /> }
+                    
                 </div>
                 <Chosen />
             </div>
