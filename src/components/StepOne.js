@@ -1,13 +1,15 @@
 import { useState } from "react";
 import Chosen from "./Chosen";
-import Receiver from "./Receiver";
+import Search from "./Search";
 import Suggestions from "./Suggestions";
+import ToSecondStep from "./ToSecondStep";
 
-const StepOne = () => {
-    
-    const [receiver, setReceiver] = useState('');
+const StepOne = (props) => {
+    const setReceiver=props.setReceiver;
+    const [search, setSearch] = useState('');
     const [list, setList] = useState(null);
     const [profilePictureList, setProfilePictureList] = useState(null);
+    const [chosen, setChosen] = useState(null);
 
     return ( 
         <div className="relative w-full max-w-[546px] rounded-lg p-6 gap-6 flex flex-col bg-white">
@@ -19,24 +21,19 @@ const StepOne = () => {
                 <div>
                     <div className="flex flex-col gap-1.5">
                         <label className="font-medium text-xs leading-4  text-mainBlack">მიმღები</label>
-                        <Receiver receiver={receiver} setReceiver={setReceiver} setList={setList} setProfilePictureList={setProfilePictureList} />
+                        <Search search={search} setSearch={setSearch} setList={setList} setProfilePictureList={setProfilePictureList} />
                     </div>
-                    { list && list.length>0 && <Suggestions list={list} profilePictureList={profilePictureList} /> }
-                    
+                    { list && list.length>0 && <Suggestions 
+                        list={list} setList={setList} setChosen={setChosen}
+                        profilePictureList={profilePictureList} setProfilePictureList={setProfilePictureList} 
+                    /> }
                 </div>
-                <Chosen />
+                { chosen && <Chosen chosen={chosen} setChosen={setChosen} /> }
             </div>
-            <div className="w-full h-[1px] bg-bgGray mt-6" >
-            </div>
-            <div className="cursor-pointer flex justify-center ml-auto items-center py-2 px-4 gap-1 w-[111px] h-10 bg-[#727a8229] rounded-[32px]">
-                <p className="text-lightGray font-medium text-sm leading-6 tracking-[0.02em]">შემდეგი</p>
-                <i
-                    id="next-icon"
-                    className="fa-solid fa-chevron-right text-lightGray text-[10px] font-bold "
-                />
-            </div>
+            <div className="w-full h-[1px] bg-bgGray mt-6" />
+            <ToSecondStep chosen={chosen} setReceiver={setReceiver} />
         </div>
     );
 }
- 
+
 export default StepOne;
