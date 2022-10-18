@@ -1,14 +1,23 @@
 import Agree from "./Agree";
 import DealType from "./DealType";
 import Purpose from "./Purpose";
-import Quantity from "./Quantity";
+import Amount from "./Amount";
 import ToThirdStep from "./ToThirdStep";
+import { calculateTotal } from "../utils/calculateTotal";
+import { useState } from "react";
 
 const StepTwo = (props) => {
     const data = props.receiver[0];
     const pic = props.receiver[1];
     const setReceiver = props.setReceiver;
-
+    const percentage = props.percentage;
+    const amount = props.amount;
+    const setAmount = props.setAmount;
+    const [dealType, setDealType] = useState('გაყიდვა');
+    const [price, setPrice] = useState('');
+    const [boughtItem, setBoughtItem] = useState('');
+    const [purpose, setPurpose] = useState('');
+    
     return (
         <div className="page_2 w-full max-w-[546px] rounded-lg p-6 gap-6 flex flex-col bg-white">
             <div className="flex justify-between">
@@ -29,21 +38,18 @@ const StepTwo = (props) => {
             <div className="flex flex-col gap-1.5">
                 <label className="font-medium flex justify-between  text-[12px] leading-[16px] text-[#292D33]" >
                     გადასარიცხი ჯედების რაოდენობა
-                    <span>საკომისიო 1%</span>
+                    <span>საკომისიო {percentage}%</span>
                 </label>
                 <div className="relative">
                     <svg className="absolute right-[14.21px] top-1/2 translate-y-[-50%]" width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15.313 10.1765H8.47301L8.90301 12.5275H11.227V15.6505C10.495 15.9865 9.67801 16.1205 8.81701 16.1205C6.32301 16.1205 5.11801 14.8785 5.11801 11.2175C5.11801 7.75851 6.96801 6.31451 9.46301 6.31451C10.926 6.31451 11.872 6.65051 13.119 7.38951L15.27 5.64351C14.195 4.90451 12.904 4.33351 11.27 4.06451V0.874512H9.54801V3.89751H9.33301C8.64501 3.89751 7.95601 3.96451 7.31101 4.06451V0.874512H5.59101V4.50151C2.62301 5.50851 0.687012 7.79251 0.687012 11.2175C0.687012 14.8775 2.32201 17.2295 5.50501 18.1355V21.1255H7.22501V18.4715C7.74101 18.5385 8.30101 18.5715 8.86001 18.5715C9.07501 18.5715 9.24701 18.5715 9.46201 18.5385V21.1245H11.182V18.3705C12.645 18.1355 14.065 17.6995 15.312 17.0945V10.1765H15.313Z" fill="#727A82"/>
                     </svg>
-                    <Quantity />
+                    <Amount amount={amount} setAmount={setAmount} />
                 </div>
-                <label className=" font-medium text-xs leading-4 text-lightGray ">სულ ჩამოგეჭრება 10 000 000 GeD</label>
+                {amount>0 && <label className=" text-left font-medium text-xs leading-4 text-lightGray ">სულ ჩამოგეჭრება {calculateTotal(amount, percentage, 1)} GeD</label>}
             </div>
-            
-            {/* <DealType /> */}
-
-            {/* <Purpose /> */}
-
+            <DealType dealType={dealType} setDealType={setDealType} price={price} setPrice={setPrice} boughtItem={boughtItem} setBoughtItem={setBoughtItem} />
+            <Purpose purpose={purpose} setPurpose={setPurpose} />
             <div className="w-full h-[1px] bg-bgGray mt-6" />
             <div className="flex items-center w-full h-10 justify-between">
                 <Agree />

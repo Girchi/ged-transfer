@@ -6,6 +6,8 @@ import StepTwo from "./StepTwo";
 
 const Steps = () => {
     const [receiver, setReceiver] = useState(null);
+    const [percentage, setPercentage] = useState(1);
+    const [amount, setAmount] = useState('');
 
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
@@ -28,7 +30,7 @@ const Steps = () => {
     return (
         <form className=" relative w-full max-w-[546px] rounded-lg flex flex-col bg-white ">
             { !receiver && <StepOne setReceiver={setReceiver} />}
-            { receiver && <StepTwo receiver={receiver} setReceiver={setReceiver} /> }
+            { receiver && <StepTwo receiver={receiver} setReceiver={setReceiver} percentage={percentage} amount={amount} setAmount={setAmount} /> }
         </form>
     );
 }
