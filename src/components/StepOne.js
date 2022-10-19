@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Chosen from "./Chosen";
+import NextButton from "./NextButton";
 import Search from "./Search";
 import Suggestions from "./Suggestions";
-import ToSecondStep from "./ToSecondStep";
 
 const StepOne = (props) => {
     const setReceiver=props.setReceiver;
@@ -10,6 +10,12 @@ const StepOne = (props) => {
     const [list, setList] = useState(null);
     const [profilePictureList, setProfilePictureList] = useState(null);
     const [chosen, setChosen] = useState(null);
+
+    const handleClick = () => {
+        if(chosen) {
+            setReceiver(chosen);
+        }
+    }
 
     return ( 
         <div className="relative w-full max-w-[546px] rounded-lg p-6 gap-6 flex flex-col bg-white">
@@ -31,7 +37,7 @@ const StepOne = (props) => {
                 { chosen && <Chosen chosen={chosen} setChosen={setChosen} /> }
             </div>
             <div className="w-full h-[1px] bg-bgGray mt-6" />
-            <ToSecondStep chosen={chosen} setReceiver={setReceiver} />
+            <NextButton handleClick={handleClick} goodToGo={chosen} />
         </div>
     );
 }

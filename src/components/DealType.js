@@ -10,20 +10,14 @@ const DealType = (props) => {
         <div className="mt-6 flex flex-col gap-4">
             <h3 className=" text-left font-medium text-sm leading-4 text-lightGray ">გადარიცხვის მიზანი</h3>
             <div className="flex p-1 gap-0.5 w-full h-10 bg-[#292d330a] rounded-lg ">
-                <div onClick={() => setDealType('გაყიდვა')} className="flex justify-center items-center p-1 gap-2.5 w-1/3 h-8 bg-white rounded-[4px] ">
-                    <p className={`font-medium text-sm leading-6 cursor-pointer ${ dealType==='გაყიდვა' ? 'text-secondaryGreen' : 'text-lightGray' }`}>
-                        გაყიდვა
-                    </p>
+                <div onClick={() => setDealType('გაყიდვა')} className={`flex justify-center items-center p-1 gap-2.5 w-1/3 h-8 rounded-[4px] ${ dealType==='გაყიდვა' ? 'text-secondaryGreen bg-white' : 'text-lightGray' }`}>
+                    <p className='font-medium text-sm leading-6 cursor-pointer'>გაყიდვა</p>
                 </div>
-                <div onClick={() => setDealType('ნივთის ყიდვა')} className="flex justify-center items-center p-1 gap-2.5 w-1/3 h-8 bg-white rounded-[4px] ">
-                    <p className={`font-medium text-sm leading-6 cursor-pointer ${ dealType==='ნივთის ყიდვა' ? 'text-secondaryGreen' : 'text-lightGray' }`}>
-                        ნივთის ყიდვა
-                    </p>
+                <div onClick={() => setDealType('ნივთის ყიდვა')} className={`flex justify-center items-center p-1 gap-2.5 w-1/3 h-8 rounded-[4px] ${ dealType==='ნივთის ყიდვა' ? 'text-secondaryGreen bg-white' : 'text-lightGray' }`}>
+                    <p className='font-medium text-sm leading-6 cursor-pointer'>ნივთის ყიდვა</p>
                 </div>
-                <div onClick={() => setDealType('გაჩუქება')} className="flex justify-center items-center p-1 gap-2.5 w-1/3 h-8 bg-white rounded-[4px] ">
-                    <p className={`font-medium text-sm leading-6 cursor-pointer ${ dealType==='გაჩუქება' ? 'text-secondaryGreen' : 'text-lightGray' }`}>
-                        გაჩუქება
-                    </p>
+                <div onClick={() => setDealType('გაჩუქება')} className={`flex justify-center items-center p-1 gap-2.5 w-1/3 h-8 rounded-[4px] ${ dealType==='გაჩუქება' ? 'text-secondaryGreen bg-white' : 'text-lightGray' }`}>
+                    <p className='font-medium text-sm leading-6 cursor-pointer'>გაჩუქება</p>
                 </div>
             </div>
             { dealType==='გაყიდვა' && (

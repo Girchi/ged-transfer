@@ -31,6 +31,7 @@ const Suggestions = (props) => {
                             <div className="flex flex-col">
                                 <h4 className="font-normal text-[14px] leading-6 text-[#292D33] ">
                                     { item.attributes.field_first_name } { item.attributes.field_last_name }
+                                    { !item.attributes.field_first_name && !item.attributes.field_last_name && item.attributes.name}
                                 </h4>
                                 <div className="flex h-5 w-full justify-center items-center gap-1 font-medium text-[12px] leading-6 text-lightGray">
                                     <p>პ.ნ {item.attributes.field_personal_id ? item.attributes.field_personal_id.substr(0,4) : '****'}*******</p>

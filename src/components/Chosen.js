@@ -10,6 +10,7 @@ const Chosen = (props) => {
                 <div className="flex flex-col ">
                     <h4 className="font-normal text-[14px] leading-6 text-[#292D33] " >
                         { item.attributes.field_first_name } { item.attributes.field_last_name }
+                        { !item.attributes.field_first_name && !item.attributes.field_last_name && item.attributes.name}
                     </h4>
                     <div className="flex h-5 justify-center items-center gap-2 font-medium text-[12px] text-lightGray leading-6">
                         <p>პ.ნ {item.attributes.field_personal_id ? item.attributes.field_personal_id.substr(0,4) : '****'}*******</p>

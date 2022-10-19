@@ -16,7 +16,7 @@ const Purpose = (props) => {
                 </h3>
             </div>
             { toggle && <textarea
-                className=" w-[490px] h-[72px] flex flex-col justify-between items-center 
+                className=" h-[72px] flex flex-col justify-between items-center 
                 pl-[12px] pt-[6px] pb-[6px] pr-[12px] gap-[8px] border-solid border-[1px] rounded-[6px]"
                 name="purpose"
                 maxLength={300}

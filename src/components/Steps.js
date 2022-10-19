@@ -28,7 +28,7 @@ const Steps = () => {
     }, []);
 
     return (
-        <form className=" relative w-full max-w-[546px] rounded-lg flex flex-col bg-white ">
+        <form className=" relative w-full max-w-[546px] rounded-lg flex flex-col bg-white mb-8">
             { !receiver && <StepOne setReceiver={setReceiver} />}
             { receiver && <StepTwo receiver={receiver} setReceiver={setReceiver} percentage={percentage} amount={amount} setAmount={setAmount} /> }
         </form>

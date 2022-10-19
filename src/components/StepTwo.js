@@ -2,9 +2,9 @@ import Agree from "./Agree";
 import DealType from "./DealType";
 import Purpose from "./Purpose";
 import Amount from "./Amount";
-import ToThirdStep from "./ToThirdStep";
 import { calculateTotal } from "../utils/calculateTotal";
 import { useState } from "react";
+import NextButton from "./NextButton";
 
 const StepTwo = (props) => {
     const data = props.receiver[0];
@@ -17,6 +17,13 @@ const StepTwo = (props) => {
     const [price, setPrice] = useState('');
     const [boughtItem, setBoughtItem] = useState('');
     const [purpose, setPurpose] = useState('');
+    const [agree, setAgree] = useState(false);
+    const total = calculateTotal(amount, percentage, 1);
+    const goodToGo = amount>0 && agree;
+
+    const handleClick = () => {
+
+    }
     
     return (
         <div className="page_2 w-full max-w-[546px] rounded-lg p-6 gap-6 flex flex-col bg-white">
@@ -29,6 +36,7 @@ const StepTwo = (props) => {
                 <img className=" h-6 w-6 rounded-full " src={pic} alt="" />
                 <h3 className="font-[500] text-[14px] leading-[24px] text-[#292D33] ">
                     { data.attributes.field_first_name } { data.attributes.field_last_name }
+                    { !data.attributes.field_first_name && !data.attributes.field_last_name && data.attributes.name}
                 </h3>
                 </div>
                 <svg onClick={() => setReceiver(null)} className=" cursor-pointer " width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,14 +54,14 @@ const StepTwo = (props) => {
                     </svg>
                     <Amount amount={amount} setAmount={setAmount} />
                 </div>
-                {amount>0 && <label className=" text-left font-medium text-xs leading-4 text-lightGray ">სულ ჩამოგეჭრება {calculateTotal(amount, percentage, 1)} GeD</label>}
+                {amount>0 && <label className=" text-left font-medium text-xs leading-4 text-lightGray ">სულ ჩამოგეჭრება {total} GeD</label>}
             </div>
             <DealType dealType={dealType} setDealType={setDealType} price={price} setPrice={setPrice} boughtItem={boughtItem} setBoughtItem={setBoughtItem} />
             <Purpose purpose={purpose} setPurpose={setPurpose} />
             <div className="w-full h-[1px] bg-bgGray mt-6" />
             <div className="flex items-center w-full h-10 justify-between">
-                <Agree />
-                <ToThirdStep />
+                <Agree agree={agree} setAgree={setAgree} />
+                <NextButton handleClick={handleClick} goodToGo={goodToGo} />
             </div>
         </div>
     );
