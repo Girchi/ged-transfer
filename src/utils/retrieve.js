@@ -9,6 +9,7 @@ export async function retrieve(url) {
         return data;
     }
     catch (err) {
-        return console.log('API got an error', err);
+        console.log('API got an error', err);
+        return false; 
     }
 }

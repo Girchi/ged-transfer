@@ -1,9 +1,10 @@
 export function termToUrl(term) {
     const words = term.split(' ');
     let url = '';
+    const baseUrl = process.env.REACT_APP_DRUPAL_DOMAIN;
 
     if( +term > 0 ) {
-        url = 'https://www.girchi.com/jsonapi/user/user?' + new URLSearchParams({
+        url = baseUrl + '/jsonapi/user/user?' + new URLSearchParams({
             'include': 'user_picture',
             'filter[orGroup][group][conjunction]': 'OR',
             'filter[first][condition][path]': 'drupal_internal__uid',
@@ -16,7 +17,7 @@ export function termToUrl(term) {
             'filter[last][condition][value]': term,
         });
     } else if (term && words.length === 1) {
-        url = 'https://www.girchi.com/jsonapi/user/user?' + new URLSearchParams({
+        url = baseUrl + '/jsonapi/user/user?' + new URLSearchParams({
             'include': 'user_picture',
             'filter[orGroup][group][conjunction]': 'OR',
             'filter[display][condition][path]': 'name',
@@ -33,7 +34,7 @@ export function termToUrl(term) {
             'filter[last][condition][value]': term,
         });
     } else if (words.length > 1) {
-        url = 'https://www.girchi.com/jsonapi/user/user?' + new URLSearchParams({
+        url = baseUrl + '/jsonapi/user/user?' + new URLSearchParams({
             'include': 'user_picture',
             'filter[orGroupOne][group][conjunction]': 'OR',
             'filter[orGroupTwo][group][conjunction]': 'OR',
