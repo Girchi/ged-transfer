@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="App">
       <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-      <Main />
+      <Main loggedIn={loggedIn} />
     </div>
   );
 }
