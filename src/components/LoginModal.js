@@ -1,25 +1,40 @@
 import React, { useState } from 'react';
 import ReactDom from 'react-dom';
-import {checkTokenAndGetUserInfo} from '../utils/checkTokenAndGetUserInfo';
+import { checkTokenAndGetUserInfo } from '../utils/checkTokenAndGetUserInfo';
+import { emailToUsername } from '../utils/emailToUsername';
 import { getAuthClient } from "../utils/auth";
 const auth = getAuthClient();
 
-export default function LoginModal({open, onClose, loggedIn, setLoggedIn}) {
-    const [username, setUsername] = useState('');
+export default function LoginModal({open, onClose, setLoggedIn}) {
+    const [usernameOrEmail, setUsernameOrEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(false);
 
-    const handleClick = () => {
+    const handleClick = async () => {
+        let username = usernameOrEmail;
+        if(usernameOrEmail.indexOf('@') !== -1) {
+            username = await emailToUsername(usernameOrEmail)
+                .catch(err => {setError(err)});
+        }
         if(username && password) {
-            
             auth.login(username, password).then(() => {
                 checkTokenAndGetUserInfo().then(result => {
                     setLoggedIn(result);
                     onClose();
-
-                });
+                    setUsernameOrEmail('');
+                    setPassword('');
+                    setError(false);
+                })
+            })
+            .catch(err => {
+                if(err.message === 'Error retrieving OAuth token: invalid_credentials') {
+                    setError('არასწორი სახელი/მეილი ან პაროლი');
+                } else {
+                    setError('მოხდა შეცდომა');
+                }
             });
         }
-    }
+    };
 
     if(!open) return null;
     return ReactDom.createPortal(
@@ -35,8 +50,8 @@ export default function LoginModal({open, onClose, loggedIn, setLoggedIn}) {
                         placeholder="მომხმარებლის სახელი / მეილი"
                         name="username"
                         required
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}
+                        value={usernameOrEmail}
+                        onChange={e => setUsernameOrEmail(e.target.value)}
                     />
                     <input
                         className="search flex w-full justify-between items-center p-[10px] gap-[8px] bg-white border-solid border border-bgGray 
@@ -48,7 +63,10 @@ export default function LoginModal({open, onClose, loggedIn, setLoggedIn}) {
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                     />
-                    <div className="w-full h-[1px] bg-bgGray mt-6  " />
+                    { error && <div className=' text-red-500 text-sm absolute top-52 '> 
+                        {error}
+                    </div> }
+                    <div className="w-full h-[1px] bg-bgGray mt-6"/>
                     <div className='flex items-center w-full h-10 justify-between'>
                         <div onClick={onClose} className=" font-medium text-sm leading-4 text-lightGray cursor-pointer" >დახურვა</div>
                         <div onClick={handleClick} className='flex justify-center ml-auto items-center py-2 px-4 gap-1 w-[111px] h-10 rounded-[32px] bg-secondaryGreen text-white cursor-pointer'>
