@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { idToUrl } from "../utils/idToUrl";
 import { retrieve } from "../utils/retrieve";
 import StepOne from "./StepOne";
+import StepThree from "./StepThree";
 import StepTwo from "./StepTwo";
 
-const Steps = () => {
+const Steps = ({loggedIn, setModalIsOpen}) => {
     const [receiver, setReceiver] = useState(null);
     const [percentage, setPercentage] = useState(1);
     const [amount, setAmount] = useState('');
+    const [transferRequest, setTransferRequest] = useState(null);
 
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
@@ -30,7 +32,12 @@ const Steps = () => {
     return (
         <form className=" relative w-full max-w-[546px] rounded-lg flex flex-col bg-white mb-8">
             { !receiver && <StepOne setReceiver={setReceiver} />}
-            { receiver && <StepTwo receiver={receiver} setReceiver={setReceiver} percentage={percentage} amount={amount} setAmount={setAmount} /> }
+            { receiver && !transferRequest && <StepTwo 
+                loggedIn={loggedIn} data={receiver[0]} pic={receiver[1]} setReceiver={setReceiver} 
+                percentage={percentage} amount={amount} setAmount={setAmount} setModalIsOpen={setModalIsOpen}
+                setTransferRequest={setTransferRequest}
+            /> }
+            { transferRequest && <StepThree transferRequest={transferRequest} />}
         </form>
     );
 }

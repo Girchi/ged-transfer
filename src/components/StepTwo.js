@@ -5,24 +5,27 @@ import Amount from "./Amount";
 import { calculateTotal } from "../utils/calculateTotal";
 import { useState } from "react";
 import NextButton from "./NextButton";
+import { createTransferRequest } from "../utils/createTransferRequest";
 
-const StepTwo = (props) => {
-    const data = props.receiver[0];
-    const pic = props.receiver[1];
-    const setReceiver = props.setReceiver;
-    const percentage = props.percentage;
-    const amount = props.amount;
-    const setAmount = props.setAmount;
+const StepTwo = ({loggedIn, data, pic, setReceiver, percentage, amount, setAmount, setModalIsOpen, setTransferRequest}) => {
     const [dealType, setDealType] = useState('გაყიდვა');
     const [price, setPrice] = useState('');
     const [boughtItem, setBoughtItem] = useState('');
     const [purpose, setPurpose] = useState('');
     const [agree, setAgree] = useState(false);
     const total = calculateTotal(amount, percentage, 1);
-    const goodToGo = amount>0 && agree;
+    let goodToGo = amount>0 && agree && ( !loggedIn || total<=loggedIn.data.attributes.field_ged);
 
     const handleClick = () => {
-
+        if(!goodToGo) return;
+        if(!loggedIn) {
+            setModalIsOpen(true);
+            return;
+        }
+        const retrieved = createTransferRequest(data.attributes.drupal_internal__uid, amount, dealType, price, boughtItem, purpose);
+        retrieved.then(result=>{
+            setTransferRequest(result);
+        });
     }
     
     return (
@@ -33,11 +36,11 @@ const StepTwo = (props) => {
             </div>
             <div className="flex justify-between items-center p-4 gap-3 w-full h-12 rounded-[6px] bg-[#292d330a] ">
                 <div className="flex gap-3">
-                <img className=" h-6 w-6 rounded-full " src={pic} alt="" />
-                <h3 className="font-[500] text-[14px] leading-[24px] text-[#292D33] ">
-                    { data.attributes.field_first_name } { data.attributes.field_last_name }
-                    { !data.attributes.field_first_name && !data.attributes.field_last_name && data.attributes.name}
-                </h3>
+                    <img className="h-6 w-6 rounded-full" src={pic} alt="receiver" />
+                    <h3 className="font-[500] text-[14px] leading-[24px] text-[#292D33]">
+                        { data.attributes.field_first_name } { data.attributes.field_last_name }
+                        { !data.attributes.field_first_name && !data.attributes.field_last_name && data.attributes.name}
+                    </h3>
                 </div>
                 <svg onClick={() => setReceiver(null)} className=" cursor-pointer " width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1.41999 18.5789C1.13948 18.5784 0.872062 18.4601 0.682993 18.2529C0.490439 18.0474 0.394758 17.7694 0.419993 17.4889L0.664993 14.7949L11.983 3.48091L15.52 7.01691L4.20499 18.3299L1.51099 18.5749C1.47999 18.5779 1.44899 18.5789 1.41999 18.5789ZM16.226 6.30991L12.69 2.77391L14.811 0.652906C14.9986 0.465129 15.2531 0.359619 15.5185 0.359619C15.7839 0.359619 16.0384 0.465129 16.226 0.652906L18.347 2.77391C18.5348 2.96147 18.6403 3.216 18.6403 3.48141C18.6403 3.74681 18.5348 4.00134 18.347 4.18891L16.227 6.30891L16.226 6.30991Z" fill="#727A82"/>
@@ -54,7 +57,7 @@ const StepTwo = (props) => {
                     </svg>
                     <Amount amount={amount} setAmount={setAmount} />
                 </div>
-                {amount>0 && <label className=" text-left font-medium text-xs leading-4 text-lightGray ">სულ ჩამოგეჭრება {total} GeD</label>}
+                {amount>0 && <label className=" font-medium text-xs leading-4 text-lightGray ">სულ ჩამოგეჭრება {total} GeD</label>}
             </div>
             <DealType dealType={dealType} setDealType={setDealType} price={price} setPrice={setPrice} boughtItem={boughtItem} setBoughtItem={setBoughtItem} />
             <Purpose purpose={purpose} setPurpose={setPurpose} />

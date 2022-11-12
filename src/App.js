@@ -6,6 +6,7 @@ import {checkTokenAndGetUserInfo} from './utils/checkTokenAndGetUserInfo';
 
 function App() {
   const[loggedIn, setLoggedIn] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     checkTokenAndGetUserInfo()
@@ -17,8 +18,8 @@ function App() {
 
   return (
     <div className="App">
-      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-      <Main loggedIn={loggedIn} />
+      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
+      <Main loggedIn={loggedIn} setModalIsOpen={setModalIsOpen} />
     </div>
   );
 }

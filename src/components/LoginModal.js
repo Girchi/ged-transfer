@@ -5,12 +5,13 @@ import { emailToUsername } from '../utils/emailToUsername';
 import { getAuthClient } from "../utils/auth";
 const auth = getAuthClient();
 
-export default function LoginModal({open, onClose, setLoggedIn}) {
+export default function LoginModal({modalIsOpen, setModalIsOpen, setLoggedIn}) {
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
 
-    const handleClick = async () => {
+    const handleClick = async (e) => {
+        e.preventDefault();
         let username = usernameOrEmail;
         if(usernameOrEmail.indexOf('@') !== -1) {
             username = await emailToUsername(usernameOrEmail)
@@ -20,7 +21,7 @@ export default function LoginModal({open, onClose, setLoggedIn}) {
             auth.login(username, password).then(() => {
                 checkTokenAndGetUserInfo().then(result => {
                     setLoggedIn(result);
-                    onClose();
+                    setModalIsOpen(false);
                     setUsernameOrEmail('');
                     setPassword('');
                     setError(false);
@@ -36,12 +37,12 @@ export default function LoginModal({open, onClose, setLoggedIn}) {
         }
     };
 
-    if(!open) return null;
+    if(!modalIsOpen) return null;
     return ReactDom.createPortal(
         <>
-            <div className=' fixed inset-0 bg-[#000A] z-50 ' />
-            <div className=' fixed inset-2/4 -translate-x-1/2 -translate-y-1/2 bg-white p-8 z-50 w-full h-full max-w-[546px] max-h-[340px] rounded-lg  mb-8 ' >
-                <form className=" flex flex-col gap-6  ">
+            <div className='fixed inset-0 bg-[#000A] z-50'/>
+            <div className='fixed inset-2/4 -translate-x-1/2 -translate-y-1/2 bg-white p-8 z-50 w-full h-full max-w-[546px] max-h-[340px] rounded-lg mb-8'>
+                <form className="flex flex-col gap-6">
                     <h1 className="text-xl font-bold leading-6 text-mainBlack">ავტორიზაცია</h1>
                     <input
                         className="search flex w-full justify-between items-center p-[10px] gap-[8px] bg-white border-solid border border-bgGray 
@@ -68,10 +69,11 @@ export default function LoginModal({open, onClose, setLoggedIn}) {
                     </div> }
                     <div className="w-full h-[1px] bg-bgGray mt-6"/>
                     <div className='flex items-center w-full h-10 justify-between'>
-                        <div onClick={onClose} className=" font-medium text-sm leading-4 text-lightGray cursor-pointer" >დახურვა</div>
-                        <div onClick={handleClick} className='flex justify-center ml-auto items-center py-2 px-4 gap-1 w-[111px] h-10 rounded-[32px] bg-secondaryGreen text-white cursor-pointer'>
+                        <div onClick={() => setModalIsOpen(false)} className=" font-medium text-sm leading-4 text-lightGray cursor-pointer" >დახურვა</div>
+                        <button onClick={e => handleClick(e)} className='flex justify-center ml-auto items-center 
+                            py-2 px-4 gap-1 w-[111px] h-10 rounded-[32px] bg-secondaryGreen text-white cursor-pointer'>
                             <p className=" font-medium text-sm leading-6 tracking-[0.02em]">ავტორიზაცია</p>
-                        </div>
+                        </button>
                     </div>
                 </form>
             </div>
