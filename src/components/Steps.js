@@ -2,14 +2,17 @@ import { useEffect, useState } from "react";
 import { idToUrl } from "../utils/idToUrl";
 import { retrieve } from "../utils/retrieve";
 import StepOne from "./StepOne";
-import StepThree from "./StepThree";
 import StepTwo from "./StepTwo";
+import StepThree from "./StepThree";
+import Success from "./Success";
+import Failure from "./Failure";
 
 const Steps = ({loggedIn, setModalIsOpen}) => {
     const [receiver, setReceiver] = useState(null);
     const [percentage, setPercentage] = useState(1);
     const [amount, setAmount] = useState('');
     const [transferRequest, setTransferRequest] = useState(null);
+    const [transferFinalized, setTransferFinalized] = useState(false);
 
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
@@ -37,7 +40,11 @@ const Steps = ({loggedIn, setModalIsOpen}) => {
                 percentage={percentage} amount={amount} setAmount={setAmount} setModalIsOpen={setModalIsOpen}
                 setTransferRequest={setTransferRequest}
             /> }
-            { transferRequest && <StepThree transferRequest={transferRequest} />}
+            { transferRequest && !transferFinalized && 
+                <StepThree transferRequest={transferRequest} loggedIn={loggedIn} setTransferFinalized={setTransferFinalized} 
+            />}
+            { transferFinalized==='success' && <Success />}
+            { transferFinalized?.error && <Failure error={transferFinalized.error} />}
         </form>
     );
 }
