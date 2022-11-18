@@ -15,7 +15,7 @@ const Header = ({loggedIn, setLoggedIn, modalIsOpen, setModalIsOpen}) => {
                         <h1 className="font-bold text-2xl leading-[14px] text-mainGreen">გირჩი</h1>
                     </a>
                     <div className="flex gap-8">
-                        <ul className="flex items-center gap-6">
+                        <ul className="flex items-center gap-6 text-sm">
                             <li><a href="https://www.girchi.com/" >პოლიტიკოსები</a></li>
                             <li><a href="https://www.girchi.com/" >ანალიტიკა</a></li>
                             <li><a href="https://www.girchi.com/" >სიახლეები</a></li>
@@ -24,7 +24,7 @@ const Header = ({loggedIn, setLoggedIn, modalIsOpen, setModalIsOpen}) => {
                         </ul>
                         <div className="flex items-center gap-3">
                             { loggedIn && <LoggedInUser loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
-                            { !loggedIn && <button className="flex justify-center items-center bg-secondaryGreen rounded-[32px] cursor-pointer py-2 px-4 ">
+                            { !loggedIn && <button className="flex justify-center items-center bg-secondaryGreen rounded-[32px] cursor-pointer py-2 px-4">
                                 <span onClick={() => setModalIsOpen(true)} className="font-medium text-sm leading-6 tracking-[0.02em] text-white">ავტორიზაცია</span>
                             </button>}
                             <div className="flex items-start p-[10.5px] w-10 aspect-square bg-primaryColor rounded-full">
