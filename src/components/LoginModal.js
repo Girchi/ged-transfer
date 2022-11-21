@@ -9,9 +9,11 @@ export default function LoginModal({modalIsOpen, setModalIsOpen, setLoggedIn}) {
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
+    const [wait, setWait] = useState(false);
 
     const handleClick = async (e) => {
         e.preventDefault();
+        setWait(true);
         let username = usernameOrEmail;
         if(usernameOrEmail.indexOf('@') !== -1) {
             username = await emailToUsername(usernameOrEmail)
@@ -25,13 +27,16 @@ export default function LoginModal({modalIsOpen, setModalIsOpen, setLoggedIn}) {
                     setUsernameOrEmail('');
                     setPassword('');
                     setError(false);
+                    setWait(false);
                 })
             })
             .catch(err => {
                 if(err.message === 'Error retrieving OAuth token: invalid_credentials') {
                     setError('არასწორი სახელი/მეილი ან პაროლი');
+                    setWait(false);
                 } else {
                     setError('მოხდა შეცდომა');
+                    setWait(false);
                 }
             });
         }
@@ -40,8 +45,9 @@ export default function LoginModal({modalIsOpen, setModalIsOpen, setLoggedIn}) {
     if(!modalIsOpen) return null;
     return ReactDom.createPortal(
         <>
-            <div className='fixed inset-0 bg-[#000A] z-50'/>
-            <div className='fixed inset-2/4 -translate-x-1/2 -translate-y-1/2 bg-white p-8 z-50 w-full h-full max-w-[546px] max-h-[340px] rounded-lg mb-8'>
+            <div className='fixed inset-0 bg-[#000A] z-30'/>
+            { wait && <div className='fixed inset-0 z-50 cursor-wait'/>}
+            <div className='fixed inset-2/4 -translate-x-1/2 -translate-y-1/2 bg-white p-8 z-40 w-full h-full max-w-[546px] max-h-[340px] rounded-lg mb-8'>
                 <form className="flex flex-col gap-6">
                     <h1 className="text-xl font-bold leading-6 text-mainBlack">ავტორიზაცია</h1>
                     <input
@@ -64,7 +70,7 @@ export default function LoginModal({modalIsOpen, setModalIsOpen, setLoggedIn}) {
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                     />
-                    { error && <div className=' text-red-500 text-sm absolute top-52 '> 
+                    { error && <div className='text-red-500 text-sm absolute top-52'> 
                         {error}
                     </div> }
                     <div className="w-full h-[1px] bg-bgGray mt-6"/>

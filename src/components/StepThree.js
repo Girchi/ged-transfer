@@ -1,9 +1,10 @@
-import { createRef, useEffect, useRef, useState } from "react";
+import { createRef, useRef, useState } from "react";
 import { finalizeTransfer } from "../utils/finalizeTransfer";
 
 export default function StepThree({ transferRequest, loggedIn, setTransferFinalized }) {
     const [code, setCode] = useState(["", "", "", "", "", ""]);
     const [codeIsWrong, setCodeIsWrong] = useState(false);
+    const [wait, setWait] = useState(false);
     const codeString = code[0] + code[1] + code[2] + code[3] + code[4] + code[5];
     const goodToGo = !codeIsWrong && codeString.length===6 && loggedIn;
     const refs = useRef([]);
@@ -24,14 +25,20 @@ export default function StepThree({ transferRequest, loggedIn, setTransferFinali
         } else if (i > 0) {
             refs.current[i - 1].current.select();
         }
+
+        if(codeIsWrong) {
+            setCodeIsWrong(false);
+        }
     };
 
     const sendCode = e => {
         e.preventDefault();
         if(!goodToGo) return;
+        setWait(true);
 
         const res = finalizeTransfer(codeString);
         res.then(result => {
+            setWait(false);
             if(result.error) {
                 console.log(result);
                 if(result.error === 'კოდი არასწორია') {
@@ -50,14 +57,9 @@ export default function StepThree({ transferRequest, loggedIn, setTransferFinali
         });
     }
 
-    useEffect(() => {
-        if(codeIsWrong) {
-            setCodeIsWrong(false);
-        }
-    }, [code])
-
     return (
         <div className="w-full max-w-[546px] rounded-lg p-6 gap-10 flex flex-col bg-white">
+            { wait && <div className='fixed inset-0 z-50 cursor-wait'/>}
             <div className="flex justify-between">
                 <h1 className="text-xl font-bold leading-6 text-mainBlack">გადარიცხვა</h1>
                 <h2 className="font-medium tracking-[0.02em] text-lightGray">ნაბიჯი 3/3</h2>
@@ -113,7 +115,7 @@ export default function StepThree({ transferRequest, loggedIn, setTransferFinali
                     უკან დაბრუნება
                 </h1>
                 <button onClick={e => sendCode(e)} 
-                    className={`${goodToGo? ' bg-secondaryGreen text-white ' : 'bg-[#727a8229] text-lightGray'}  
+                    className={`${goodToGo ? 'bg-secondaryGreen text-white' : 'bg-[#727a8229] text-lightGray cursor-not-allowed'}  
                     flex flex-row justify-center items-center gap-[4px] w-[138px] h-[40px]  rounded-[32px]`}>
                     დადასტურება
                 </button>

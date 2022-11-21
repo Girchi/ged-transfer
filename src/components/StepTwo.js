@@ -2,9 +2,9 @@ import Agree from "./Agree";
 import DealType from "./DealType";
 import Purpose from "./Purpose";
 import Amount from "./Amount";
+import NextButton from "./NextButton";
 import { calculateTotal } from "../utils/calculateTotal";
 import { useState } from "react";
-import NextButton from "./NextButton";
 import { createTransferRequest } from "../utils/createTransferRequest";
 
 const StepTwo = ({loggedIn, data, pic, setReceiver, percentage, amount, setAmount, setModalIsOpen, setTransferRequest}) => {
@@ -13,6 +13,7 @@ const StepTwo = ({loggedIn, data, pic, setReceiver, percentage, amount, setAmoun
     const [boughtItem, setBoughtItem] = useState('');
     const [purpose, setPurpose] = useState('');
     const [agree, setAgree] = useState(false);
+    const [wait, setWait] = useState(false);
     const total = calculateTotal(amount, percentage, 1);
     let goodToGo = amount>0 && agree && ( !loggedIn || total<=loggedIn.data.attributes.field_ged);
 
@@ -22,6 +23,7 @@ const StepTwo = ({loggedIn, data, pic, setReceiver, percentage, amount, setAmoun
             setModalIsOpen(true);
             return;
         }
+        setWait(true);
         const retrieved = createTransferRequest(data.attributes.drupal_internal__uid, amount, dealType, price, boughtItem, purpose);
         retrieved.then(result=>{
             setTransferRequest(result);
@@ -30,6 +32,7 @@ const StepTwo = ({loggedIn, data, pic, setReceiver, percentage, amount, setAmoun
     
     return (
         <div className="page_2 w-full max-w-[546px] rounded-lg p-6 gap-6 flex flex-col bg-white">
+            { wait && <div className='fixed inset-0 z-50 cursor-wait'/>}
             <div className="flex justify-between">
                 <h1 className="text-xl font-bold leading-6 text-mainBlack">გადარიცხვა</h1>
                 <h2 className="font-medium tracking-[0.02em] text-lightGray">ნაბიჯი 2/3</h2>
