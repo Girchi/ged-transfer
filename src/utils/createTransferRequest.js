@@ -29,7 +29,7 @@ export async function createTransferRequest(receiverId, amount, dealType, price,
         const data = await response.json();
         if (data.error) {
             console.log('Error', data);
-            return Promise.reject(new Error(`Error: ${data.error}`));
+            return Promise.reject(new Error(data.error));
         }
         return data;
     }

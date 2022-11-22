@@ -35,10 +35,10 @@ const Steps = ({loggedIn, setModalIsOpen}) => {
     return (
         <form className=" relative w-full max-w-[546px] rounded-lg flex flex-col bg-white mb-8">
             { !receiver && <StepOne setReceiver={setReceiver} />}
-            { receiver && !transferRequest && <StepTwo 
+            { receiver && !transferRequest && !transferFinalized && <StepTwo 
                 loggedIn={loggedIn} data={receiver[0]} pic={receiver[1]} setReceiver={setReceiver} 
                 percentage={percentage} amount={amount} setAmount={setAmount} setModalIsOpen={setModalIsOpen}
-                setTransferRequest={setTransferRequest}
+                setTransferRequest={setTransferRequest} setTransferFinalized={setTransferFinalized}
             /> }
             { transferRequest && !transferFinalized && 
                 <StepThree transferRequest={transferRequest} loggedIn={loggedIn} setTransferFinalized={setTransferFinalized} 

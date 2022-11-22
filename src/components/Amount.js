@@ -1,6 +1,4 @@
-const Amount = (props) => {
-    const amount = props.amount;
-    const setAmount = props.setAmount;
+const Amount = ({ amount, setAmount }) => {
 
     return (
         <input

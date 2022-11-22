@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import logo from '../images/logo.svg';
 import qrCode from '../images/qrcode.svg';
 import LoggedInUser from './LoggedInUser';

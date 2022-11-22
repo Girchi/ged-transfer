@@ -1,6 +1,4 @@
-const Agree = (props) => {
-    const agree = props.agree;
-    const setAgree = props.setAgree;
+const Agree = ({ agree, setAgree }) => {
 
     return (
         <div className="flex justify-between gap-[11px]">
@@ -14,7 +12,9 @@ const Agree = (props) => {
                 </svg>}
             </div>
             <label className=" font-medium text-sm leading-4 text-lightGray">
-                ვეთანხმები <a className="text-[#4D73FA]" href="https://www.girchi.com/ge/media/news/girchis-konstitutsiis-shesakheb" target='_blank' >გირჩის კონსტიტუციას</a>
+                ვეთანხმები <a className="text-[#4D73FA]" href="https://www.girchi.com/ge/media/news/girchis-konstitutsiis-shesakheb" target='_blank' rel="noreferrer">
+                    გირჩის კონსტიტუციას
+                </a>
             </label>
         </div>
     );

@@ -15,13 +15,13 @@ const LoggedInUser = ({loggedIn, setLoggedIn}) => {
     return (
         <div className="flex justify-between items-center p-4 gap-3 w-full h-12 rounded-full bg-[#F2F6EC]">
             <div className="flex gap-3">
-                <img className=" h-6 w-6 rounded-full " src={pic} alt="user profile picture" />
+                <img className=" h-6 w-6 rounded-full" src={pic} alt="user profile pic"/>
                 <h3 className="font-[500] text-[14px] leading-[24px] text-[#292D33] ">
                     { data.attributes.field_first_name } { data.attributes.field_last_name }
                     { !data.attributes.field_first_name && !data.attributes.field_last_name && data.attributes.name}
                 </h3>
             </div>
-            <button className="flex justify-center items-center bg-secondaryGreen rounded-[32px] cursor-pointer py-2 px-4 ">
+            <button className="flex justify-center items-center bg-secondaryGreen rounded-[32px] cursor-pointer py-2 px-4">
                 <span onClick={handleClick} className="font-medium text-sm leading-6 tracking-[0.02em] text-white">გასვლა</span>
             </button>
         </div>
