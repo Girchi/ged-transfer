@@ -14,10 +14,12 @@ const StepTwo = ({loggedIn, data, pic, setReceiver, percentage, amount, setAmoun
     const [price, setPrice] = useState('');
     const [boughtItem, setBoughtItem] = useState('');
     const [purpose, setPurpose] = useState('');
-    const [agree, setAgree] = useState(false);
+    const [agree, setAgree] = useState(true);
     const [wait, setWait] = useState(false);
     const total = calculateTotal(amount, percentage, 1);
-    let goodToGo = amount>0 && agree && ( !loggedIn || total<=loggedIn.data.attributes.field_ged);
+    let goodToGo = amount>0 && agree && ( !loggedIn || (
+        total<=loggedIn.data.attributes.field_ged && loggedIn.data.attributes.drupal_internal__uid !== data.attributes.drupal_internal__uid
+    ));
 
     const handleClick = () => {
         if(!goodToGo) return;

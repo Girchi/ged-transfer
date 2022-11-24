@@ -43,6 +43,7 @@ const Search = ({setList, setProfilePictureList}) => {
                 required
                 value={search}
                 onChange={e => setSearch(e.target.value)}
+                onKeyPress={e => { e.key === 'Enter' && e.preventDefault() }}
             />
             { search && <X onClick={() => setSearch('')} className="absolute right-[42px] top-[120px] cursor-pointer"/> }
         </>
