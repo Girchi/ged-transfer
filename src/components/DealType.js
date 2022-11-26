@@ -30,7 +30,10 @@ const DealType = ({dealType, setDealType, price, setPrice, boughtItem, setBought
                         name="price"
                         required
                         value={price}
-                        onChange={e => setPrice(e.target.value)}
+                        onChange={e => {
+                            if (!(e.target.value >= 0) || e.target.value === " ") return;
+                            setPrice(e.target.value)
+                        }}
                     />
                 </div>
             )}

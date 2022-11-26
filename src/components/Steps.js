@@ -9,7 +9,7 @@ import Failure from "./Failure";
 
 const Steps = ({loggedIn, setModalIsOpen}) => {
     const [receiver, setReceiver] = useState(null);
-    const [percentage, setPercentage] = useState(1);
+    const [percentage, setPercentage] = useState({percentage: 0.36, minimum: 36});
     const [amount, setAmount] = useState('');
     const [transferRequest, setTransferRequest] = useState(null);
     const [transferFinalized, setTransferFinalized] = useState(false);
@@ -30,6 +30,14 @@ const Steps = ({loggedIn, setModalIsOpen}) => {
                 }
             });
         }
+    }, []);
+
+    useEffect(() => {
+        fetch(process.env.REACT_APP_DRUPAL_DOMAIN + '/ged_commission').then(response => {
+            return response.json();
+        }).then(data => {
+            setPercentage({percentage: data.data.percentage, minimum: data.data.minimum});
+        })
     }, []);
 
     return (

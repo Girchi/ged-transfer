@@ -105,15 +105,17 @@ export default function StepThree({ transferRequest, loggedIn, setTransferFinali
                         );
                     })}
                 </div>
-                {codeIsWrong && <div className=" text-[#E34338] text-xs -mt-8 ">
+                {codeIsWrong && <div className="w-[300px] text-[#E34338] text-xs -mt-8 mx-auto">
                     არასწორი კოდი. სცადეთ თავიდან
                 </div>}
             </div>
             <div className="w-full h-[1px] bg-bgGray "/>
             <div className="w-full flex justify-between items-center">
-                <h1 id="goBack" className="cursor-pointer font-medium text-[14px] leading-6 text-[#292D33]">
-                    უკან დაბრუნება
-                </h1>
+                <a href="/">
+                    <h1 id="goBack" className="cursor-pointer font-medium text-[14px] leading-6 text-[#292D33]">
+                        უკან დაბრუნება
+                    </h1>
+                </a>
                 <button onClick={e => sendCode(e)} 
                     className={`${goodToGo ? 'bg-secondaryGreen text-white' : 'bg-[#727a8229] text-lightGray cursor-not-allowed'}  
                     flex flex-row justify-center items-center gap-[4px] w-[138px] h-[40px]  rounded-[32px]`}>

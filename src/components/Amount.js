@@ -1,5 +1,10 @@
 const Amount = ({ amount, setAmount }) => {
 
+    const handleChange = e => {
+        if (!(e.target.value >= 0) || e.target.value === " ") return;
+        setAmount(e.target.value);
+    }
+
     return (
         <input
             className="flex w-full  p-2.5 gap-2 bg-white border-solid border-[1px] border-bgGray rounded-md  h-11 
@@ -9,7 +14,7 @@ const Amount = ({ amount, setAmount }) => {
             name="amount"
             required
             value={amount}
-            onChange={e => setAmount(e.target.value)}
+            onChange={e => handleChange(e)}
         />
     );
 }

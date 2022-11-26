@@ -14,10 +14,12 @@ export default function Success() {
             </p>
             <div className="w-full h-[1px] bg-bgGray "/>
             <div className="w-full flex justify-between items-center">
-                <h1 className="cursor-pointer font-medium text-[14px] leading-6 text-[#292D33]">
-                    მთავარ გვერდზე გადასვლა
-                </h1>
-                <a href="http://localhost:3000/"
+                <a href="/">
+                    <h1 className="cursor-pointer font-medium text-[14px] leading-6 text-[#292D33]">
+                        მთავარ გვერდზე გადასვლა
+                    </h1>
+                </a>
+                <a href="/"
                     className=" bg-secondaryGreen text-white 
                     flex flex-row justify-center items-center gap-[4px] w-[138px] h-[40px] rounded-[32px]">
                     დასრულება

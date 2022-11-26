@@ -16,7 +16,7 @@ const StepTwo = ({loggedIn, data, pic, setReceiver, percentage, amount, setAmoun
     const [purpose, setPurpose] = useState('');
     const [agree, setAgree] = useState(true);
     const [wait, setWait] = useState(false);
-    const total = calculateTotal(amount, percentage, 1);
+    const total = calculateTotal(amount, percentage.percentage, +percentage.minimum);
     let goodToGo = amount>0 && agree && ( !loggedIn || (
         total<=loggedIn.data.attributes.field_ged && loggedIn.data.attributes.drupal_internal__uid !== data.attributes.drupal_internal__uid
     ));
@@ -56,13 +56,18 @@ const StepTwo = ({loggedIn, data, pic, setReceiver, percentage, amount, setAmoun
             <div className="flex flex-col gap-1.5">
                 <label className="font-medium flex justify-between  text-[12px] leading-[16px] text-[#292D33]" >
                     გადასარიცხი ჯედების რაოდენობა
-                    <span>საკომისიო {percentage}%</span>
+                    <span>საკომისიო {percentage.percentage}% (მინიმუმ {percentage.minimum} GeD)</span>
                 </label>
                 <div className="relative">
                     <Ged className="absolute right-[14.21px] top-1/2 translate-y-[-50%] text-[#727A82]"/>
                     <Amount amount={amount} setAmount={setAmount} />
                 </div>
-                {amount>0 && <label className=" font-medium text-xs leading-4 text-lightGray ">სულ ჩამოგეჭრება {total} GeD</label>}
+                {amount>0 && (!loggedIn || total<=loggedIn.data.attributes.field_ged) && <label className="font-medium text-xs leading-4 text-lightGray">
+                    სულ ჩამოგეჭრება {total} GeD
+                </label>}
+                {amount>0 && loggedIn && total>loggedIn.data.attributes.field_ged && <label className=" font-medium text-xs leading-4 text-[#E34338]">
+                    ამ ტრანზაქციისთვის საჭიროა {total} GeD
+                </label>}
             </div>
             <DealType dealType={dealType} setDealType={setDealType} price={price} setPrice={setPrice} boughtItem={boughtItem} setBoughtItem={setBoughtItem} />
             <Purpose purpose={purpose} setPurpose={setPurpose} />
