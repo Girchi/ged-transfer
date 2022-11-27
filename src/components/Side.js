@@ -13,7 +13,7 @@ const Side = ({loggedIn, showQr, setShowQr}) => {
     const data = loggedIn.data;
     let urlToCopy = '';
     if(data) {
-        urlToCopy = 'http://localhost:3000/?id=' + data.attributes.drupal_internal__uid;
+        urlToCopy = 'https://wallet.girchi.com/?id=' + data.attributes.drupal_internal__uid;
     }
 
     useEffect(() => {
