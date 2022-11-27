@@ -5,8 +5,9 @@ import { ReactComponent as Ged } from "../images/ged.svg";
 import { ReactComponent as Copy } from "../images/copy.svg";
 import { ReactComponent as Check } from "../images/check.svg";
 import { ReactComponent as Qr } from "../images/qrcode.svg";
+import QrModal from "./QrModal";
 
-const Side = ({loggedIn}) => {
+const Side = ({loggedIn, showQr, setShowQr}) => {
     const [copied, setCopied] = useState({now: false, ever: false});
     const [currencyInfo, setCurrencyInfo] = useState(null);
     const data = loggedIn.data;
@@ -76,9 +77,10 @@ const Side = ({loggedIn}) => {
                             { copied.ever && <Check className="w-[14px] h-[14px] mr-[3px]"/> }
                         </div>
                     </div>
-                    <div className="flex items-center justify-center w-11 aspect-square bg-[#F3F3F4] rounded-md">
+                    <button onClick={() => setShowQr(true)} className="flex items-center justify-center w-11 aspect-square bg-[#F3F3F4] rounded-md">
                         <Qr />
-                    </div>
+                    </button>
+                    { showQr && <QrModal urlToCopy={urlToCopy} setShowQr={setShowQr} />}
                 </div>
             </div>}
         </div>

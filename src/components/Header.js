@@ -3,7 +3,7 @@ import qrCode from '../images/qrcode.svg';
 import LoggedInUser from './LoggedInUser';
 import LoginModal from './LoginModal';
 
-const Header = ({loggedIn, setLoggedIn, modalIsOpen, setModalIsOpen}) => {
+const Header = ({loggedIn, setLoggedIn, modalIsOpen, setModalIsOpen, setShowQr}) => {
 
     return ( 
         <>
@@ -26,9 +26,10 @@ const Header = ({loggedIn, setLoggedIn, modalIsOpen, setModalIsOpen}) => {
                             { !loggedIn && <button className="flex justify-center items-center bg-secondaryGreen rounded-[32px] cursor-pointer py-2 px-4">
                                 <span onClick={() => setModalIsOpen(true)} className="font-medium text-sm leading-6 tracking-[0.02em] text-white">ავტორიზაცია</span>
                             </button>}
-                            <div className="flex items-start p-[10.5px] w-10 aspect-square bg-primaryColor rounded-full">
+                            <button onClick={() => { loggedIn && setShowQr(true)}} className={`${!loggedIn && 'cursor-not-allowed'}
+                                flex items-start p-[10.5px] w-10 aspect-square bg-primaryColor rounded-full`}>
                                 <img src={qrCode} alt="qr code" />
-                            </div>
+                            </button>
                         </div>
                     </div>
                 </div>

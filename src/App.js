@@ -7,6 +7,7 @@ import {checkTokenAndGetUserInfo} from './utils/checkTokenAndGetUserInfo';
 function App() {
   const[loggedIn, setLoggedIn] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [showQr, setShowQr] = useState(false);
 
   useEffect(() => {
     checkTokenAndGetUserInfo()
@@ -18,8 +19,12 @@ function App() {
 
   return (
     <div className="App">
-      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} />
-      <Main loggedIn={loggedIn} setModalIsOpen={setModalIsOpen} />
+      <Header 
+        loggedIn={loggedIn} setLoggedIn={setLoggedIn} 
+        modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen}
+        setShowQr={setShowQr}
+      />
+      <Main loggedIn={loggedIn} setModalIsOpen={setModalIsOpen} showQr={showQr} setShowQr={setShowQr} />
     </div>
   );
 }
