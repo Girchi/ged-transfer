@@ -18,6 +18,7 @@ const refreshPromises = [];
  *   Returns an object of functions with $config injected.
  */
 export function getAuthClient(config = {}) {
+    const nodeUrl = process.env.REACT_APP_NODE_PAYMENT_CONNECT_URL;
     const defaultConfig = {
         // Base URL of your Drupal site.
         base: process.env.REACT_APP_DRUPAL_DOMAIN,
@@ -42,7 +43,7 @@ export function getAuthClient(config = {}) {
         formData.append('password', password);
 
         try {
-            const response = await fetch('/api', {
+            const response = await fetch(`${nodeUrl}/api`, {
                 method: 'post',
                 headers: new Headers({
                     'Accept': 'application/json',
@@ -139,7 +140,7 @@ export function getAuthClient(config = {}) {
         const formData = new URLSearchParams();
         formData.append('refresh_token', refresh_token);
     
-        return(refreshPromises[refresh_token] = fetch('/api', {
+        return(refreshPromises[refresh_token] = fetch(`${nodeUrl}/api`, {
             method: 'post',
             headers: new Headers({
                 'Accept': 'application/json',
