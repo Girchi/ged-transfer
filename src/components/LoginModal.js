@@ -45,7 +45,7 @@ export default function LoginModal({modalIsOpen, setModalIsOpen, setLoggedIn}) {
     if(!modalIsOpen) return null;
     return ReactDom.createPortal(
         <>
-            <div className='fixed inset-0 bg-[#000A] z-30'/>
+            <div className='fixed inset-0 bg-[#1b21278f] z-30'/>
             { wait && <div className='fixed inset-0 z-50 cursor-wait'/>}
             <div className='fixed inset-2/4 -translate-x-1/2 -translate-y-1/2 bg-white p-8 z-40 w-full h-full max-w-[546px] max-h-[340px] rounded-lg mb-8'>
                 <form className="flex flex-col gap-6">

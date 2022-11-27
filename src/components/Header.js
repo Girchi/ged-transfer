@@ -9,17 +9,17 @@ const Header = ({loggedIn, setLoggedIn, modalIsOpen, setModalIsOpen, setShowQr})
         <>
             <header className="w-full p-4 bg-white">
                 <div className='max-w-[1344px] mx-auto flex items-center justify-between'>
-                    <a href="https://www.girchi.com/" className='flex items-center gap-4'>
+                    <a href="/" className='flex items-center gap-4'>
                         <img src={logo} alt="logo" />
                         <h1 className="font-bold text-2xl leading-[14px] text-mainGreen">გირჩი</h1>
                     </a>
                     <div className="flex gap-8">
-                        <ul className="flex items-center gap-6 text-sm">
-                            <li><a href="https://www.girchi.com/" >პოლიტიკოსები</a></li>
-                            <li><a href="https://www.girchi.com/" >ანალიტიკა</a></li>
-                            <li><a href="https://www.girchi.com/" >სიახლეები</a></li>
-                            <li><a href="https://www.girchi.com/" >პროექტები</a></li>
-                            <li><a href="https://www.girchi.com/" >გაზეთი</a></li>
+                        <ul className="hidden xl:flex items-center gap-6 text-sm">
+                            <li><a target='_blank' rel="noreferrer" href="https://www.girchi.com/" >პოლიტიკოსები</a></li>
+                            <li><a target='_blank' rel="noreferrer" href="https://www.girchi.com/" >ანალიტიკა</a></li>
+                            <li><a target='_blank' rel="noreferrer" href="https://www.girchi.com/ge/news" >სიახლეები</a></li>
+                            <li><a target='_blank' rel="noreferrer" href="https://www.girchi.com/ge/projects" >პროექტები</a></li>
+                            <li><a target='_blank' rel="noreferrer" href="https://www.girchi.com/ge/node/4439" >გაზეთი</a></li>
                         </ul>
                         <div className="flex items-center gap-3">
                             { loggedIn && <LoggedInUser loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}

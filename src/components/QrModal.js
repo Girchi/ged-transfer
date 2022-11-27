@@ -5,7 +5,7 @@ import QRCode from "react-qr-code";
 export default function QrModal({urlToCopy, setShowQr}) {
     return ReactDom.createPortal(
         <>
-            <div className='fixed inset-0 bg-[#000A] z-30'/>
+            <div className='fixed inset-0 bg-[#1b21278f] z-30'/>
             <div className='fixed inset-2/4 -translate-x-1/2 -translate-y-1/2 bg-white p-8 z-40 w-full h-full max-w-[320px] max-h-[420px] rounded-lg mb-8'>
                 <div className="flex flex-col gap-6">
                     <div className='mx-auto'>
