@@ -33,7 +33,7 @@ const Steps = ({loggedIn, setModalIsOpen}) => {
     }, []);
 
     useEffect(() => {
-        fetch(process.env.REACT_APP_DRUPAL_DOMAIN + '/ged_commission').then(response => {
+        fetch(process.env.REACT_APP_DRUPAL_DOMAIN + '/api/wallet/ged_commission').then(response => {
             return response.json();
         }).then(data => {
             setPercentage({percentage: data.data.percentage, minimum: data.data.minimum});

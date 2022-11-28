@@ -2,7 +2,7 @@ import { getAuthClient } from "./auth";
 const auth = getAuthClient();
 
 export async function finalizeTransfer(verificationCode) {
-    const url = '/ged_transfer_verification';
+    const url = '/api/wallet/ged_transfer_verification';
     let formData = new URLSearchParams();
     formData.append('code', verificationCode);
     try {

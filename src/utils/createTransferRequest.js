@@ -2,7 +2,7 @@ import { getAuthClient } from "./auth";
 const auth = getAuthClient();
 
 export async function createTransferRequest(receiverId, amount, dealType, price, boughtItem, purpose) {
-    const url = '/user/1/ged';
+    const url = '/api/wallet/create_transfer_request';
     let formData = new URLSearchParams();
     formData.append('receiver', receiverId);
     formData.append('amount', amount);
