@@ -8,6 +8,7 @@ import { useState } from "react";
 import { createTransferRequest } from "../utils/createTransferRequest";
 import { ReactComponent as Edit } from "../images/edit.svg";
 import { ReactComponent as Ged } from "../images/ged.svg";
+import { NumericFormat } from 'react-number-format';
 
 const StepTwo = ({loggedIn, data, pic, setReceiver, percentage, amount, setAmount, setModalIsOpen, setTransferRequest, setTransferFinalized}) => {
     const [dealType, setDealType] = useState('გაყიდვა');
@@ -66,10 +67,10 @@ const StepTwo = ({loggedIn, data, pic, setReceiver, percentage, amount, setAmoun
                     სულ ჩამოგეჭრება {total} GeD
                 </label>}
                 {amount>0 && loggedIn && total>loggedIn.data.attributes.field_ged && <label className=" font-medium text-xs leading-4 text-[#E34338]">
-                    ამ ტრანზაქციისთვის საჭიროა {total} GeD
+                    ამ ტრანზაქციისთვის საჭიროა <NumericFormat value={total} thousandSeparator=" " displayType="text" /> GeD
                 </label>}
             </div>
-            <DealType dealType={dealType} setDealType={setDealType} price={price} setPrice={setPrice} boughtItem={boughtItem} setBoughtItem={setBoughtItem} />
+            <DealType dealType={dealType} setDealType={setDealType} setPrice={setPrice} boughtItem={boughtItem} setBoughtItem={setBoughtItem} />
             <Purpose purpose={purpose} setPurpose={setPurpose} />
             <div className="w-full h-[1px] bg-bgGray mt-6" />
             <div className="flex items-center w-full h-10 justify-between">

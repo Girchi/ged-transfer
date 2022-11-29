@@ -5,6 +5,7 @@ import { ReactComponent as Ged } from "../images/ged.svg";
 import { ReactComponent as Copy } from "../images/copy.svg";
 import { ReactComponent as Check } from "../images/check.svg";
 import { ReactComponent as Qr } from "../images/qrcode.svg";
+import { NumericFormat } from 'react-number-format';
 import QrModal from "./QrModal";
 
 const Side = ({loggedIn, showQr, setShowQr}) => {
@@ -33,7 +34,7 @@ const Side = ({loggedIn, showQr, setShowQr}) => {
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="font-bold text-xl leading-6 ">
-                        { data && data.attributes.field_ged }
+                        { data && <NumericFormat value={data.attributes.field_ged} thousandSeparator=" " displayType="text" /> }
                     </h1>
                     <h3 className="font-medium text-sm leading-6 text-lightGray">
                         { data ? 'ჩემი ბალანსი' : 'ბალანსის სანახავად გაიარეთ ავტორიზაცია'}

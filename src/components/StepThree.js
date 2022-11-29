@@ -1,5 +1,6 @@
 import { createRef, useRef, useState } from "react";
 import { finalizeTransfer } from "../utils/finalizeTransfer";
+import { NumericFormat } from 'react-number-format';
 
 export default function StepThree({ transferRequest, loggedIn, setTransferFinalized }) {
     const [code, setCode] = useState(["", "", "", "", "", ""]);
@@ -72,13 +73,17 @@ export default function StepThree({ transferRequest, loggedIn, setTransferFinali
                     </div>
                     <div className="flex w-full justify-between ">
                         <p className="font-medium text-sm leading-4 text-lightGray">დაერიცხება:</p>
-                        <p className="font-medium text-sm leading-4 text-mainBlack">{will_receive} GeD</p>
+                        <p className="font-medium text-sm leading-4 text-mainBlack">
+                            <NumericFormat value={will_receive} thousandSeparator=" " displayType="text"/> GeD
+                        </p>
                     </div>
                 </div>
                 <div className="w-full h-[1px] bg-bgGray" />
                 <div className="flex w-full justify-between">
                     <p className="font-medium text-sm leading-4 text-lightGray">სულ ჩამოგეჭრება:</p>
-                    <p className="font-medium text-sm leading-4 text-mainBlack">{total} GeD</p>
+                    <p className="font-medium text-sm leading-4 text-mainBlack">
+                        <NumericFormat value={total} thousandSeparator=" " displayType="text"/> GeD
+                    </p>
                 </div>
             </div>
             <div className="w-full flex flex-col gap-10">

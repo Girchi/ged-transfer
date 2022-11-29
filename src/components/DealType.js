@@ -1,7 +1,8 @@
 import { ReactComponent as Gel } from "../images/gel.svg";
 import { ReactComponent as Cart } from "../images/cart.svg";
+import { NumericFormat } from 'react-number-format';
 
-const DealType = ({dealType, setDealType, price, setPrice, boughtItem, setBoughtItem}) => {
+const DealType = ({dealType, setDealType, setPrice, boughtItem, setBoughtItem}) => {
     return (
         <div className="mt-6 flex flex-col gap-4">
             <h3 className="font-medium text-sm leading-4 text-lightGray">გადარიცხვის მიზანი</h3>
@@ -22,18 +23,14 @@ const DealType = ({dealType, setDealType, price, setPrice, boughtItem, setBought
             { dealType==='გაყიდვა' && (
                 <div className="relative">
                     <Gel className="absolute right-[14.21px] top-1/2 translate-y-[-50%]"/>
-                    <input
+                    <NumericFormat
                         className="flex justify-between items-center p-2.5 gap-2 bg-white border-solid border-[1px] border-bgGray rounded-md 
                         w-full h-11 box-border placeholder:font-medium placeholder:text-sm placeholder:leading-4px placeholder:text-lightGray"
-                        type="text"
+                        thousandSeparator=" " 
                         placeholder="რამდენ ლარად გაყიდე? მაგ: 10 000 ₾"
                         name="price"
                         required
-                        value={price}
-                        onChange={e => {
-                            if (!(e.target.value >= 0) || e.target.value === " ") return;
-                            setPrice(e.target.value)
-                        }}
+                        onValueChange={values => {setPrice(values.value)}}
                     />
                 </div>
             )}
