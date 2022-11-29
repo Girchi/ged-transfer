@@ -19,10 +19,8 @@ export default function Failure({error}) {
                         მთავარ გვერდზე გადასვლა
                     </h1>
                 </a>
-                <a href="/"
-                    className="bg-[#727a8229] text-lightGray 
-                    flex flex-row justify-center items-center gap-[4px] w-[138px] h-[40px] rounded-[32px]">
-                    დასრულება
+                <a href="/" className="flex justify-center items-center bg-[#727a8229] rounded-[32px] cursor-pointer py-2 px-4">
+                    <span className="font-medium text-sm leading-6 tracking-[0.02em] text-lightGray">დასრულება</span>
                 </a>
             </div>
         </div>
