@@ -18,7 +18,7 @@ function App() {
   }, [])
 
   return (
-    <div className="App">
+    <div className="App min-w-[420px]">
       <Header 
         loggedIn={loggedIn} setLoggedIn={setLoggedIn} 
         modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen}

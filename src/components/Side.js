@@ -30,7 +30,7 @@ const Side = ({loggedIn, showQr, setShowQr}) => {
     }
 
     return (
-        <div className={`${data ? 'h-[263px]' : 'h-[180px]'} flex flex-col p-7 gap-6 w-full max-w-[318px] bg-white rounded-lg`}>
+        <div className={`${data ? 'h-[263px]' : 'h-[180px]'} flex flex-col p-7 gap-6 w-full max-w-[318px] bg-white rounded-lg shadow-big`}>
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="font-bold text-xl leading-6 ">

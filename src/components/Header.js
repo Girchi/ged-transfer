@@ -7,7 +7,7 @@ const Header = ({loggedIn, setLoggedIn, modalIsOpen, setModalIsOpen, setShowQr})
 
     return ( 
         <>
-            <header className="w-full p-4 bg-white">
+            <header className="w-full p-4 bg-white shadow-big">
                 <div className='max-w-[1344px] mx-auto flex items-center justify-between'>
                     <a href="/" className='flex items-center gap-4'>
                         <img src={logo} alt="logo" />

@@ -35,8 +35,9 @@ const Search = ({setList, setProfilePictureList}) => {
         <>
             { wait && <div className='fixed inset-0 z-40 cursor-wait'/>}
             <input
-                className="search flex w-full justify-between items-center p-[10px] gap-[8px] bg-white border-solid 
-                border border-bgGray rounded-md h-11 placeholder:font-medium placeholder:text-sm placeholder:leading-4"
+                className={`search flex w-full justify-between items-center p-[10px] gap-[8px] bg-white border-solid 
+                border border-bgGray rounded-md h-11 placeholder:font-medium placeholder:text-sm 
+                placeholder:leading-4 ${search && 'pr-10'}`}
                 type="text"
                 placeholder="სახელი-გვარი / პირადი ნომერი / მომხმარებლის ID"
                 name="userName"

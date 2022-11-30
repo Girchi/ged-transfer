@@ -55,9 +55,9 @@ const StepTwo = ({loggedIn, data, pic, setReceiver, percentage, amount, setAmoun
                 <Edit onClick={() => setReceiver(null)} className="cursor-pointer"/>
             </div>
             <div className="flex flex-col gap-1.5">
-                <label className="font-medium flex justify-between  text-[12px] leading-[16px] text-[#292D33]" >
+                <label className="font-medium flex justify-between gap-10 text-[12px] leading-[16px] text-[#292D33]" >
                     გადასარიცხი ჯედების რაოდენობა
-                    <span>საკომისიო {percentage.percentage}% (მინიმუმ {percentage.minimum} GeD)</span>
+                    <span className="text-right">საკომისიო {percentage.percentage}% (მინიმუმ {percentage.minimum} GeD)</span>
                 </label>
                 <div className="relative">
                     <Ged className="absolute right-[14.21px] top-1/2 translate-y-[-50%] text-[#727A82]"/>
