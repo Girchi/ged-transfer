@@ -18,7 +18,7 @@ const StepTwo = ({loggedIn, data, pic, setReceiver, percentage, amount, setAmoun
     const [agree, setAgree] = useState(true);
     const [wait, setWait] = useState(false);
     const total = calculateTotal(amount, percentage.percentage, +percentage.minimum);
-    let goodToGo = amount>0 && agree && ( !loggedIn || (
+    let goodToGo = amount>0 && agree && (dealType !== 'გაყიდვა' || price) && ( !loggedIn || (
         total<=loggedIn.data.attributes.field_ged && loggedIn.data.attributes.drupal_internal__uid !== data.attributes.drupal_internal__uid
     ));
 
