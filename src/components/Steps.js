@@ -13,6 +13,7 @@ const Steps = ({loggedIn, setModalIsOpen}) => {
     const [amount, setAmount] = useState('');
     const [transferRequest, setTransferRequest] = useState(null);
     const [transferFinalized, setTransferFinalized] = useState(false);
+    const [dataToSend, setDataToSend] = useState([]);
 
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
@@ -47,10 +48,13 @@ const Steps = ({loggedIn, setModalIsOpen}) => {
                 loggedIn={loggedIn} data={receiver[0]} pic={receiver[1]} setReceiver={setReceiver} 
                 percentage={percentage} amount={amount} setAmount={setAmount} setModalIsOpen={setModalIsOpen}
                 setTransferRequest={setTransferRequest} setTransferFinalized={setTransferFinalized}
+                setDataToSend={setDataToSend}
             /> }
-            { transferRequest && !transferFinalized && 
-                <StepThree transferRequest={transferRequest} loggedIn={loggedIn} setTransferFinalized={setTransferFinalized} 
-            />}
+            { transferRequest && !transferFinalized && <StepThree 
+                transferRequest={transferRequest} loggedIn={loggedIn} 
+                setTransferFinalized={setTransferFinalized} dataToSend={dataToSend}
+                setTransferRequest={setTransferRequest}
+            /> }
             { transferFinalized==='success' && <Success />}
             { transferFinalized?.error && <Failure error={transferFinalized.error} />}
         </form>

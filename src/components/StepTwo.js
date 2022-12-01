@@ -10,7 +10,7 @@ import { ReactComponent as Edit } from "../images/edit.svg";
 import { ReactComponent as Ged } from "../images/ged.svg";
 import { NumericFormat } from 'react-number-format';
 
-const StepTwo = ({loggedIn, data, pic, setReceiver, percentage, amount, setAmount, setModalIsOpen, setTransferRequest, setTransferFinalized}) => {
+const StepTwo = ({loggedIn, data, pic, setReceiver, percentage, amount, setAmount, setModalIsOpen, setTransferRequest, setTransferFinalized, setDataToSend}) => {
     const [dealType, setDealType] = useState('გაყიდვა');
     const [price, setPrice] = useState('');
     const [boughtItem, setBoughtItem] = useState('');
@@ -29,6 +29,7 @@ const StepTwo = ({loggedIn, data, pic, setReceiver, percentage, amount, setAmoun
             return;
         }
         setWait(true);
+        setDataToSend([data.attributes.drupal_internal__uid, amount, dealType, price, boughtItem, purpose]);
         const retrieved = createTransferRequest(data.attributes.drupal_internal__uid, amount, dealType, price, boughtItem, purpose);
         retrieved.then(result=>{
             setTransferRequest(result);
