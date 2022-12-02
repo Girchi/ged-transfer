@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { retrieve } from "../utils/retrieve";
 import { termToUrl } from "../utils/termToUrl";
 import { ReactComponent as X } from "../images/x.svg";
@@ -6,13 +6,16 @@ import { ReactComponent as X } from "../images/x.svg";
 const Search = ({setList, setProfilePictureList}) => {
     const [search, setSearch] = useState("");
     const [wait, setWait] = useState(false);
+    const count = useRef(1);
     
     useEffect(() => {
         const searchUsers = searchTerm => {
+            const n = count.current;
             const term = searchTerm.trim();
             if (!term) {
                 setList({});
                 setProfilePictureList({});
+                count.current += 1;
                 return;
             }
             setWait(true);
@@ -20,8 +23,10 @@ const Search = ({setList, setProfilePictureList}) => {
             if (url) {
                 const retrieved = retrieve(url);
                 retrieved.then(result => {
+                    if(count.current > n) return;
                     setList(result.data);
                     setProfilePictureList(result.included);
+                    count.current += 1;
                     setWait(false);
                 });
             }
