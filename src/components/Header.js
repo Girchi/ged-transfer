@@ -7,11 +7,11 @@ const Header = ({loggedIn, setLoggedIn, modalIsOpen, setModalIsOpen, setShowQr})
 
     return ( 
         <>
-            <header className="w-full p-4 bg-white shadow-big">
-                <div className='max-w-[1344px] mx-auto flex items-center justify-between'>
+            <header className="h-[72px] flex flex-col justify-center p-4 bg-white shadow-big">
+                <div className='w-full max-w-[1344px] mx-auto flex items-center justify-between'>
                     <a href="/" className='flex items-center gap-4'>
                         <img src={logo} alt="logo" />
-                        <h1 className="font-bold text-2xl leading-[14px] text-mainGreen">გირჩი</h1>
+                        <h1 className={`${loggedIn && 'hidden'} sm:block font-bold text-2xl leading-[14px] text-mainGreen`}>გირჩი</h1>
                     </a>
                     <div className="flex gap-8">
                         <ul className="hidden xl:flex items-center gap-6 text-sm">
