@@ -21,7 +21,7 @@ export default function Success() {
                 <img src={success} alt="" />
             </div>
             <p className="font-medium text-sm leading-4 text-lightGray w-full">
-                გილოცავ! გადარიცხვა წარმატებით დასრულდა. შეგიძლია, შენი გადარიცხვების ისტორია ნახო
+                გილოცავ! გადარიცხვა წარმატებით დასრულდა.
             </p>
             <div className="w-full h-[1px] bg-bgGray "/>
             <div className="w-full flex justify-between items-center">
