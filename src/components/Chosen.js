@@ -7,7 +7,7 @@ const Chosen = (props) => {
 
     return (
         <div className="bg-[#292d330a] flex flex-row items-center justify-between px-[12px] py-[8px] gap-3 w-full min-h-[68px] rounded-[4px]">
-            <div className="flex gap-3">
+            <div className="flex gap-3 items-center">
                 <img className="w-10 h-10 rounded-full" src={pic} alt=""/>
                 <div className="flex flex-col ">
                     <h4 className="font-normal text-[14px] leading-6 text-[#292D33] " >

@@ -21,7 +21,7 @@ export default function Success() {
                 <img src={success} alt="" />
             </div>
             <p className="font-medium text-sm leading-4 text-lightGray w-full">
-                გილოცავ! გადარიცხვა წარმატებით დასრულდა. შეგიძლია, შენი გადარიცხვების ისტორია ნახო
+                გილოცავ! გადარიცხვა წარმატებით დასრულდა.
             </p>
             <div className="w-full h-[1px] bg-bgGray "/>
             <div className="w-full flex justify-between items-center">
@@ -30,10 +30,8 @@ export default function Success() {
                         მთავარ გვერდზე გადასვლა
                     </h1>
                 </a>
-                <a href="/"
-                    className=" bg-secondaryGreen text-white 
-                    flex flex-row justify-center items-center gap-[4px] w-[138px] h-[40px] rounded-[32px]">
-                    დასრულება
+                <a href="/" className="flex justify-center items-center bg-secondaryGreen rounded-[32px] cursor-pointer py-2 px-4">
+                    <span className="font-medium text-sm leading-6 tracking-[0.02em] text-white">დასრულება</span>
                 </a>
             </div>
         </div>

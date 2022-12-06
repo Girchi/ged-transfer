@@ -13,6 +13,7 @@ const Steps = ({loggedIn, setModalIsOpen}) => {
     const [amount, setAmount] = useState('');
     const [transferRequest, setTransferRequest] = useState(null);
     const [transferFinalized, setTransferFinalized] = useState(false);
+    const [dataToSend, setDataToSend] = useState([]);
 
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
@@ -33,7 +34,7 @@ const Steps = ({loggedIn, setModalIsOpen}) => {
     }, []);
 
     useEffect(() => {
-        fetch(process.env.REACT_APP_DRUPAL_DOMAIN + '/ged_commission').then(response => {
+        fetch(process.env.REACT_APP_DRUPAL_DOMAIN + '/api/wallet/ged_commission').then(response => {
             return response.json();
         }).then(data => {
             setPercentage({percentage: data.data.percentage, minimum: data.data.minimum});
@@ -41,16 +42,19 @@ const Steps = ({loggedIn, setModalIsOpen}) => {
     }, []);
 
     return (
-        <form className=" relative w-full max-w-[546px] rounded-lg flex flex-col bg-white mb-8">
+        <form className="relative w-full max-w-[546px] rounded-lg flex flex-col bg-white mb-8 shadow-big">
             { !receiver && <StepOne setReceiver={setReceiver} />}
             { receiver && !transferRequest && !transferFinalized && <StepTwo 
                 loggedIn={loggedIn} data={receiver[0]} pic={receiver[1]} setReceiver={setReceiver} 
                 percentage={percentage} amount={amount} setAmount={setAmount} setModalIsOpen={setModalIsOpen}
                 setTransferRequest={setTransferRequest} setTransferFinalized={setTransferFinalized}
+                setDataToSend={setDataToSend}
             /> }
-            { transferRequest && !transferFinalized && 
-                <StepThree transferRequest={transferRequest} loggedIn={loggedIn} setTransferFinalized={setTransferFinalized} 
-            />}
+            { transferRequest && !transferFinalized && <StepThree 
+                transferRequest={transferRequest} loggedIn={loggedIn} 
+                setTransferFinalized={setTransferFinalized} dataToSend={dataToSend}
+                setTransferRequest={setTransferRequest}
+            /> }
             { transferFinalized==='success' && <Success />}
             { transferFinalized?.error && <Failure error={transferFinalized.error} />}
         </form>
