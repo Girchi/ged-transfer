@@ -1,19 +1,8 @@
 import success from '../images/ok.svg';
-import { useEffect, useState } from 'react';
-import { getAuthClient } from "../utils/auth";
-const auth = getAuthClient();
 
 export default function Success() {
-    const [wait, setWait] = useState(true);
-    useEffect(() => {
-        const token = JSON.parse(localStorage.getItem('drupal-oauth-token'));
-        auth.refreshToken(token.refresh_token);
-        setWait(false);
-    }, []);
-
     return (
         <div className="w-full max-w-[546px] rounded-lg p-6 gap-10 flex flex-col bg-white">
-            { wait && <div className='fixed inset-0 z-50 cursor-wait'/>}
             <div className="flex justify-between">
                 <h1 className="text-xl font-bold leading-6 text-mainBlack">გადარიცხვა</h1>
             </div>

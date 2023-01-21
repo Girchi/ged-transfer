@@ -1,9 +1,9 @@
 import logo from '../images/logo.svg';
 import qrCode from '../images/qrcode.svg';
 import LoggedInUser from './LoggedInUser';
-import LoginModal from './LoginModal';
+import { login } from '../utils/login';
 
-const Header = ({loggedIn, setLoggedIn, modalIsOpen, setModalIsOpen, setShowQr}) => {
+const Header = ({loggedIn, setLoggedIn, setShowQr}) => {
 
     return ( 
         <>
@@ -24,7 +24,7 @@ const Header = ({loggedIn, setLoggedIn, modalIsOpen, setModalIsOpen, setShowQr})
                         <div className="flex items-center gap-3">
                             { loggedIn && <LoggedInUser loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
                             { !loggedIn && <button className="flex justify-center items-center bg-secondaryGreen rounded-[32px] cursor-pointer py-2 px-4">
-                                <span onClick={() => setModalIsOpen(true)} className="font-medium text-sm leading-6 tracking-[0.02em] text-white">ავტორიზაცია</span>
+                                <span onClick={() => login(setLoggedIn)}  className="font-medium text-sm leading-6 tracking-[0.02em] text-white">ავტორიზაცია</span>
                             </button>}
                             <button onClick={() => { loggedIn && setShowQr(true)}} className={`${!loggedIn && 'cursor-not-allowed'}
                                 flex items-start p-[10.5px] w-10 aspect-square bg-primaryColor rounded-full`}>
@@ -34,7 +34,6 @@ const Header = ({loggedIn, setLoggedIn, modalIsOpen, setModalIsOpen, setShowQr})
                     </div>
                 </div>
             </header>
-            <LoginModal modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         </>
     );
 }

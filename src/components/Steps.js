@@ -7,7 +7,7 @@ import StepThree from "./StepThree";
 import Success from "./Success";
 import Failure from "./Failure";
 
-const Steps = ({loggedIn, setModalIsOpen}) => {
+const Steps = ({loggedIn, setLoggedIn}) => {
     const [receiver, setReceiver] = useState(null);
     const [percentage, setPercentage] = useState({percentage: 0.36, minimum: 36});
     const [amount, setAmount] = useState('');
@@ -45,8 +45,8 @@ const Steps = ({loggedIn, setModalIsOpen}) => {
         <form className="relative w-full max-w-[546px] rounded-lg flex flex-col bg-white mb-8 shadow-big">
             { !receiver && <StepOne setReceiver={setReceiver} />}
             { receiver && !transferRequest && !transferFinalized && <StepTwo 
-                loggedIn={loggedIn} data={receiver[0]} pic={receiver[1]} setReceiver={setReceiver} 
-                percentage={percentage} amount={amount} setAmount={setAmount} setModalIsOpen={setModalIsOpen}
+                loggedIn={loggedIn} setLoggedIn={setLoggedIn} data={receiver[0]} pic={receiver[1]} setReceiver={setReceiver} 
+                percentage={percentage} amount={amount} setAmount={setAmount}
                 setTransferRequest={setTransferRequest} setTransferFinalized={setTransferFinalized}
                 setDataToSend={setDataToSend}
             /> }

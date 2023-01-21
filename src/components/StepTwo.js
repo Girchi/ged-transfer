@@ -9,8 +9,9 @@ import { createTransferRequest } from "../utils/createTransferRequest";
 import { ReactComponent as Edit } from "../images/edit.svg";
 import { ReactComponent as Ged } from "../images/ged.svg";
 import { NumericFormat } from 'react-number-format';
+import { login } from '../utils/login';
 
-const StepTwo = ({loggedIn, data, pic, setReceiver, percentage, amount, setAmount, setModalIsOpen, setTransferRequest, setTransferFinalized, setDataToSend}) => {
+const StepTwo = ({loggedIn, setLoggedIn, data, pic, setReceiver, percentage, amount, setAmount, setTransferRequest, setTransferFinalized, setDataToSend}) => {
     const [dealType, setDealType] = useState('გაყიდვა');
     const [price, setPrice] = useState('');
     const [boughtItem, setBoughtItem] = useState('');
@@ -25,7 +26,7 @@ const StepTwo = ({loggedIn, data, pic, setReceiver, percentage, amount, setAmoun
     const handleClick = () => {
         if(!goodToGo) return;
         if(!loggedIn) {
-            setModalIsOpen(true);
+            login(setLoggedIn)
             return;
         }
         setWait(true);
