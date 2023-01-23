@@ -1,16 +1,17 @@
 /**
  * @file
  *
- * Wrapper around fetch(), and OAuth access token handling operations.
+ * Wrapper around fetch(), and access token handling operations.
  *
  * To use import getAuthClient, and initialize a client:
  * const auth = getAuthClient(optionalConfig);
  */
 
-const refreshPromises = [];
+let sendingMessage;
+let girchiWindow;
 
 /**
- * OAuth client factory.
+ * Auth client factory.
  *
  * @param {object} config
  *
@@ -18,54 +19,16 @@ const refreshPromises = [];
  *   Returns an object of functions with $config injected.
  */
 export function getAuthClient(config = {}) {
-    const nodeUrl = process.env.REACT_APP_NODE_PAYMENT_CONNECT_URL;
     const defaultConfig = {
         // Base URL of your Drupal site.
         base: process.env.REACT_APP_DRUPAL_DOMAIN,
         // Name to use when storing the token in localStorage.
-        token_name: 'drupal-oauth-token',
-        // Margin of time before the current token expires that we should force a
-        // token refresh.
-        expire_margin: 0,
+        token_name: 'drupal-token',
     };
     config =  {...defaultConfig, ...config}
     
     /**
-    * Exchange a username & password for an OAuth token.
-    *
-    * @param {string} username 
-    * @param {string} password 
-    */
-    async function login(username, password) {
-
-        const formData = new URLSearchParams();
-        formData.append('username', username);
-        formData.append('password', password);
-
-        try {
-            const response = await fetch(`${nodeUrl}/api`, {
-                method: 'post',
-                headers: new Headers({
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                }),
-                body: formData,
-            });
-            const data = await response.json();
-            if (data.error) {
-                console.log('Error retrieving token', data);
-                return Promise.reject(new Error(`Error retrieving OAuth token: ${data.error}`));
-            }
-            return saveToken(data);
-        }
-        catch (err) {
-            console.log('API got an error', err);
-            return Promise.reject(new Error(`API error: ${err}`));
-        }
-    };
-    
-    /**
-    * Delete the stored OAuth token, effectively ending the user's session.
+    * Delete the stored token, effectively ending the user's session.
     */
     function logout() {
         localStorage.removeItem(config.token_name);
@@ -75,7 +38,7 @@ export function getAuthClient(config = {}) {
     /**
     * Wrapper for fetch() that will attempt to add a Bearer token if present.
     *
-    * If there's a valid token, or one can be obtained via a refresh token, then
+    * If there's a valid token, then
     * add it to the request headers. If not, issue the request without adding an
     * Authorization header.
     *
@@ -85,10 +48,10 @@ export function getAuthClient(config = {}) {
     async function fetchWithAuthentication(url, options) {
         if (!options.headers.get('Authorization')) {
             try {
-                const oauth_token = await token();
-                if (oauth_token) {
-                    console.log('using token', oauth_token);
-                    options.headers.append('Authorization', `Bearer ${oauth_token.access_token}`);
+                const auth_token = await token();
+                if (auth_token) {
+                    console.log('using token', auth_token);
+                    options.headers.append('Authorization', `Bearer ${auth_token}`);
                 }
             } catch (error) {
                 // Safe to swallow this error. Just means we don't have a logged in
@@ -100,88 +63,22 @@ export function getAuthClient(config = {}) {
     }
     
     /**
-    * Get the current OAuth token if there is one.
-    *
-    * Get the OAuth token form localStorage, and refresh it if necessary using
-    * the included refresh_token.
+    * Get the current token if there is one.
     *
     * @returns {Promise}
     *   Returns a Promise that resolves to the current token, or false.
     */
     async function token() {
         const token = localStorage.getItem(config.token_name) !== null
-        ? JSON.parse(localStorage.getItem(config.token_name))
+        ? localStorage.getItem(config.token_name)
         : false;
     
         if (!token) {
             return Promise.reject('empty token');
         }
     
-        const { expires_at, refresh_token } = token;
-        if (expires_at - config.expire_margin < Date.now()/1000) {
-            return refreshToken(refresh_token);
-        }
         return Promise.resolve(token);
     };
-    
-    /**
-    * Request a new token using a refresh_token.
-    *
-    * This function is smart about reusing requests for a refresh token. So it is
-    * safe to call it multiple times in succession without having to worry about
-    * whether a previous request is still processing.
-    */
-    function refreshToken(refresh_token) {
-        console.log("getting refresh token");
-        if (refreshPromises[refresh_token]) {
-            return refreshPromises[refresh_token];
-        }
-
-        const formData = new URLSearchParams();
-        formData.append('refresh_token', refresh_token);
-    
-        return(refreshPromises[refresh_token] = fetch(`${nodeUrl}/api`, {
-            method: 'post',
-            headers: new Headers({
-                'Accept': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }),
-            body: formData,
-            })
-            .then(function(response) {
-                return response.json();
-            })
-            .then((data) => {
-                delete refreshPromises[refresh_token];
-        
-                if (data.error) {
-                    console.log('Error refreshing token', data);
-                    return false;
-                }
-                return saveToken(data);
-            })
-            .catch(err => {
-                delete refreshPromises[refresh_token];
-                console.log('API got an error', err)
-                return Promise.reject(err);
-            })
-        );
-    }
-    
-    /**
-    * Store an OAuth token retrieved from Drupal in localStorage.
-    *
-    * @param {object} data 
-    * @returns {object}
-    *   Returns the token with an additional expires_at property added.
-    */
-    function saveToken(data) {
-        let token = Object.assign({}, data); // Make a copy of data object.
-        token.date = Math.floor(Date.now() / 1000);
-        token.expires_at = token.date + token.expires_in;
-        localStorage.setItem(config.token_name, JSON.stringify(token));
-        return token;
-    }
     
     /**
     * Check if the current user is logged in or not.
@@ -190,8 +87,8 @@ export function getAuthClient(config = {}) {
     */
     async function isLoggedIn() {
         try {
-            const oauth_token = await token();
-            if (oauth_token) {
+            const auth_token = await token();
+            if (auth_token) {
                 return Promise.resolve(true);
             }
         } catch (error) {
@@ -200,21 +97,36 @@ export function getAuthClient(config = {}) {
     
         return Promise.reject(false);
     };
-    
-    /**
-    * Run a query to /oauth/debug and output the results to the console.
-    */
-    function debug() {
-        const headers = new Headers({
-            Accept: 'application/vnd.api+json',
-        });
-    
-        fetchWithAuthentication('/oauth/debug?_format=json', {headers})
-        .then((response) => response.json())
-        .then((data) => {
-            console.log('debug', data);
+
+    // custom functions for window authorization
+
+    function eventListener() {
+        window.addEventListener("message", (event) => {
+            if (event.origin === config.base) {
+                let drupalToken = JSON.parse(event.data).token;
+                console.log(drupalToken);
+                localStorage.setItem('drupal-token', drupalToken);
+                girchiWindow.close();
+                clearInterval(sendingMessage);
+            }
         });
     }
+
+    function login() {
+        girchiWindow = window.open(config.base);
+        console.log("New Window Loaded");
+        sendingMessage = setInterval(() => {
+            if(girchiWindow.closed) {
+                clearInterval(sendingMessage);
+            }
+            console.log('sending message')
+            girchiWindow.postMessage("Hi there from react!", '*');
+        }, 1000);
+    }
+
+    function windowIsClosed() {
+        return girchiWindow.closed;
+    }
     
-    return {debug, login, logout, isLoggedIn, fetchWithAuthentication, token, refreshToken};
+    return {eventListener, login, logout, isLoggedIn, fetchWithAuthentication, token, windowIsClosed};
 }
