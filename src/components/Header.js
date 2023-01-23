@@ -14,13 +14,6 @@ const Header = ({loggedIn, setLoggedIn, setShowQr}) => {
                         <h1 className={`${loggedIn && 'hidden'} sm:block font-bold text-2xl leading-[14px] text-mainGreen`}>გირჩი</h1>
                     </a>
                     <div className="flex gap-8">
-                        <ul className="hidden xl:flex items-center gap-6 text-sm">
-                            <li><a target='_blank' rel="noreferrer" href="https://www.girchi.com/" >პოლიტიკოსები</a></li>
-                            <li><a target='_blank' rel="noreferrer" href="https://www.girchi.com/" >ანალიტიკა</a></li>
-                            <li><a target='_blank' rel="noreferrer" href="https://www.girchi.com/ge/news" >სიახლეები</a></li>
-                            <li><a target='_blank' rel="noreferrer" href="https://www.girchi.com/ge/projects" >პროექტები</a></li>
-                            <li><a target='_blank' rel="noreferrer" href="https://www.girchi.com/ge/node/4439" >გაზეთი</a></li>
-                        </ul>
                         <div className="flex items-center gap-3">
                             { loggedIn && <LoggedInUser loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
                             { !loggedIn && <button className="flex justify-center items-center bg-secondaryGreen rounded-[32px] cursor-pointer py-2 px-4">
