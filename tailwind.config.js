@@ -14,7 +14,9 @@ module.exports = {
         'bgGray': '#E0E2E7'
       },
       screens: {
+        xxs: '400px',
         xs: '440px',
+        s: '560px',
       },
       boxShadow: {
         'big': '0px 1px 5px rgba(41, 45, 51, 0.04), inset 0px -1px 0px rgba(41, 45, 51, 0.1)',

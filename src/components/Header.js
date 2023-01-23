@@ -11,7 +11,7 @@ const Header = ({loggedIn, setLoggedIn, setShowQr}) => {
                 <div className='w-full max-w-[1344px] mx-auto flex items-center justify-between'>
                     <a href="/" className='flex items-center gap-4'>
                         <img src={logo} alt="logo" />
-                        <h1 className={`${loggedIn && 'hidden'} sm:block font-bold text-2xl leading-[14px] text-mainGreen`}>გირჩი</h1>
+                        <h1 className={`hidden ${loggedIn ? 'sm:block' : 'xxs:block'} font-bold text-2xl leading-[14px] text-mainGreen`}>გირჩი</h1>
                     </a>
                     <div className="flex gap-8">
                         <div className="flex items-center gap-3">
