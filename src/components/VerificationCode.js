@@ -6,19 +6,23 @@ export default function VerificationCode({email, codeIsWrong, setCodeIsWrong, co
     const refs = useRef([]);
 
     const handleChange = (e, i) => {
-        if (!(e.target.value >= 0 && e.target.value <= 9) || e.target.value === " ") return;
-        setCode(prev => {
-            const changed = [...prev];
-            changed[i] = e.target.value;
-            return changed;
-        });
-
-        if (e.target.value) {
-            if (i < 5) {
-                refs.current[i + 1].current.select();
+        if (e.target.value >=100000 && e.target.value <= 999999) {
+            setCode(e.target.value.split(''));
+            refs.current[5].current.select();
+        } else if (e.target.value >= 0 && e.target.value <= 9 && !e.target.value.includes(" ")) {
+            setCode(prev => {
+                const changed = [...prev];
+                changed[i] = e.target.value;
+                return changed;
+            });
+    
+            if (e.target.value) {
+                if (i < 5) {
+                    refs.current[i + 1].current.select();
+                }
+            } else if (i > 0) {
+                refs.current[i - 1].current.select();
             }
-        } else if (i > 0) {
-            refs.current[i - 1].current.select();
         }
 
         if(codeIsWrong) {
@@ -52,10 +56,9 @@ export default function VerificationCode({email, codeIsWrong, setCodeIsWrong, co
                             ref={refs.current[i]}
                             key={i}
                             type="text"
-                            maxLength="1"
                             className={`${codeIsWrong ? 'border-[#E34338] ' : 'border-[#E0E2E7] '}
-                            flex flex-col items-center px-[14px] pt-[12px] pb-[12px] gap-2 w-10 h-14 bg-white 
-                            border-[1px] border-solid rounded-[6px] font-bold text-base text-[#292D33]`}
+                            flex flex-col items-center text-center pt-[12px] pb-[12px] gap-2 w-10 h-14 bg-white 
+                            border-[1px] border-solid rounded-[6px] font-bold text-base text-[#292D33] focus:placeholder:text-[#0000]`}
                             required
                             placeholder="_"
                             value={code[i]}
