@@ -16,7 +16,7 @@ const LoggedInUser = ({loggedIn, setLoggedIn}) => {
         <div className="flex justify-between items-center p-4 gap-3 w-full h-12 rounded-full bg-[#F2F6EC]">
             <div className="flex gap-3">
                 <img className="self-center h-6 w-6 rounded-full" src={pic} alt="user profile pic"/>
-                <h3 className="font-[500] text-[14px] leading-[24px] text-[#292D33] max-w-[120px] sm:max-w-[240px] md:max-w-[320px] truncate">
+                <h3 className="font-[500] text-[14px] leading-[24px] text-[#292D33] max-w-[20px] xxs:max-w-[100px] xs:max-w-[120px] s:max-w-[240px] truncate">
                     { data.attributes.field_first_name } { data.attributes.field_last_name }
                     { !data.attributes.field_first_name && !data.attributes.field_last_name && data.attributes.name}
                 </h3>

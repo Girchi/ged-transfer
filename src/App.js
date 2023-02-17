@@ -20,7 +20,7 @@ function App() {
   }, [])
 
   return (
-    <div className="App min-w-[420px]">
+    <div className="App">
       <Header 
         loggedIn={loggedIn} setLoggedIn={setLoggedIn}
         setShowQr={setShowQr}

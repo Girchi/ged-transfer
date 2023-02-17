@@ -42,7 +42,7 @@ const Steps = ({loggedIn, setLoggedIn}) => {
     }, []);
 
     return (
-        <form className="relative w-full max-w-[546px] rounded-lg flex flex-col bg-white mb-8 shadow-big">
+        <form className="relative w-full max-w-[546px] min-w-[400px] rounded-lg flex flex-col bg-white mb-8 shadow-big">
             { !receiver && <StepOne setReceiver={setReceiver} />}
             { receiver && !transferRequest && !transferFinalized && <StepTwo 
                 loggedIn={loggedIn} setLoggedIn={setLoggedIn} data={receiver[0]} pic={receiver[1]} setReceiver={setReceiver} 
