@@ -1,7 +1,7 @@
 export function termToUrl(term) {
     const words = term.split(' ');
     let url = '';
-    const baseUrl = process.env.REACT_APP_DRUPAL_DOMAIN;
+    const baseUrl = process.env.REACT_APP_DRUPAL_ADAPTER;
 
     if( +term > 0 ) {
         url = baseUrl + '/jsonapi/user/user?' + new URLSearchParams({
